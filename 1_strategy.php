@@ -34,14 +34,14 @@ class OrderController
    */
   public function post(string $url, array $data)
   {
-    echo "Controller: POST request to $url with " . json_encode($data) . "\n";
+    echo "Controller: POST request to $url with " . json_encode($data) . "<br/>";
 
     $path = parse_url($url, PHP_URL_PATH);
 
     if (preg_match('#^/orders?$#', $path, $matches)) {
       $this->postNewOrder($data);
     } else {
-      echo "Controller: 404 page\n";
+      echo "Controller: 404 page<br/>";
     }
   }
 
@@ -53,7 +53,7 @@ class OrderController
    */
   public function get(string $url): void
   {
-    echo "Controller: GET request to $url\n";
+    echo "Controller: GET request to $url<br/>";
 
     $path = parse_url($url, PHP_URL_PATH);
     $query = parse_url($url, PHP_URL_QUERY);
@@ -74,7 +74,7 @@ class OrderController
         $this->getPaymentReturn($paymentMethod, $order, $data);
       }
     } else {
-      echo "Controller: 404 page\n";
+      echo "Controller: 404 page<br/>";
     }
   }
 
@@ -84,7 +84,7 @@ class OrderController
   public function postNewOrder(array $data): void
   {
     $order = new Order($data);
-    echo "Controller: Created the order #{$order->id}.\n";
+    echo "Controller: Created the order #{$order->id}.<br/>";
   }
 
   /**
@@ -92,9 +92,9 @@ class OrderController
    */
   public function getAllOrders(): void
   {
-    echo "Controller: Here's all orders:\n";
+    echo "Controller: Here's all orders:<br/>";
     foreach (Order::get() as $order) {
-      echo json_encode($order, JSON_PRETTY_PRINT) . "\n";
+      echo json_encode($order, JSON_PRETTY_PRINT) . "<br/>";
     }
   }
 
@@ -105,8 +105,8 @@ class OrderController
   {
     // Фактическая работа делегируется объекту метода оплаты.
     $form = $method->getPaymentForm($order);
-    echo "Controller: here's the payment form:\n";
-    echo $form . "\n";
+    echo "Controller: here's the payment form:<br/>";
+    echo $form . "<br/>";
   }
 
   /**
@@ -117,11 +117,11 @@ class OrderController
     try {
       // Другой тип работы, делегированный методу оплаты.
       if ($method->validateReturn($order, $data)) {
-        echo "Controller: Thanks for your order!\n";
+        echo "Controller: Thanks for your order!<br/>";
         $order->complete();
       }
     } catch (\Exception $e) {
-      echo "Controller: got an exception (" . $e->getMessage() . ")\n";
+      echo "Controller: got an exception (" . $e->getMessage() . ")<br/>";
     }
   }
 }
@@ -263,7 +263,7 @@ FORM;
       throw new \Exception("Payment amount is wrong.");
     }
 
-    echo "Done!\n";
+    echo "Done!<br/>";
 
     return true;
   }
@@ -296,7 +296,7 @@ FORM;
 
     // ...
 
-    echo "Done!\n";
+    echo "Done!<br/>";
 
     return true;
   }
@@ -308,7 +308,7 @@ FORM;
 
 $controller = new OrderController();
 
-echo "Client: Let's create some orders\n";
+echo "Client: Let's create some orders<br/>";
 
 $controller->post("/orders", [
   "email" => "me@example.com",
@@ -322,18 +322,18 @@ $controller->post("/orders", [
   "total" => 19.95,
 ]);
 
-echo "\nClient: List my orders, please\n";
+echo "<br/>Client: List my orders, please<br/>";
 
 $controller->get("/orders");
 
-echo "\nClient: I'd like to pay for the second, show me the payment form\n";
+echo "<br/>Client: I'd like to pay for the second, show me the payment form<br/>";
 
 $controller->get("/order/1/payment/paypal");
 
-echo "\nClient: ...pushes the Pay button...\n";
-echo "\nClient: Oh, I'm redirected to the PayPal.\n";
-echo "\nClient: ...pays on the PayPal...\n";
-echo "\nClient: Alright, I'm back with you, guys.\n";
+echo "<br/>Client: ...pushes the Pay button...<br/>";
+echo "<br/>Client: Oh, I'm redirected to the PayPal.<br/>";
+echo "<br/>Client: ...pays on the PayPal...<br/>";
+echo "<br/>Client: Alright, I'm back with you, guys.<br/>";
 
 $controller->get("/order/1/payment/paypal/return" .
   "?key=c55a3964833a4b0fa4469ea94a057152&success=true&total=19.95");

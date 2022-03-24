@@ -1,0 +1,9 @@
+{
+  "name": "patterns/php",
+  "type": "project",
+  "description": "Examples of patterns on PHP 7.2.",
+  "keywords": ["patterns", "php"],
+  "require": {
+    "php": "^7.2|^8.0"
+  }
+}

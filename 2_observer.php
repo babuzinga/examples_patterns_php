@@ -76,7 +76,7 @@ class UserRepository implements \SplSubject
 
   public function notify(string $event = "*", $data = null): void
   {
-    echo "UserRepository: Broadcasting the '$event' event.\n";
+    echo "UserRepository: Broadcasting the '$event' event.<br/>";
     foreach ($this->getEventObservers($event) as $observer) {
       $observer->update($this, $event, $data);
     }
@@ -86,14 +86,14 @@ class UserRepository implements \SplSubject
 
   public function initialize($filename): void
   {
-    echo "UserRepository: Loading user records from a file.\n";
+    echo "UserRepository: Loading user records from a file.<br/>";
     // ...
     $this->notify("users:init", $filename);
   }
 
   public function createUser(array $data): User
   {
-    echo "UserRepository: Creating a user.\n";
+    echo "UserRepository: Creating a user.<br/>";
 
     $user = new User();
     $user->update($data);
@@ -109,7 +109,7 @@ class UserRepository implements \SplSubject
 
   public function updateUser(User $user, array $data): User
   {
-    echo "UserRepository: Updating a user.\n";
+    echo "UserRepository: Updating a user.<br/>";
 
     $id = $user->attributes["id"];
     if (!isset($this->users[$id])) {
@@ -126,7 +126,7 @@ class UserRepository implements \SplSubject
 
   public function deleteUser(User $user): void
   {
-    echo "UserRepository: Deleting a user.\n";
+    echo "UserRepository: Deleting a user.<br/>";
 
     $id = $user->attributes["id"];
     if (!isset($this->users[$id])) {
@@ -170,10 +170,10 @@ class Logger implements \SplObserver
 
   public function update(\SplSubject $repository, string $event = null, $data = null): void
   {
-    $entry = date("Y-m-d H:i:s") . ": '$event' with data '" . json_encode($data) . "'\n";
+    $entry = date("Y-m-d H:i:s") . ": '$event' with data '" . json_encode($data) . "'<br/>";
     file_put_contents($this->filename, $entry, FILE_APPEND);
 
-    echo "Logger: I've written '$event' entry to the log.\n";
+    echo "Logger: I've written '$event' entry to the log.<br/>";
   }
 }
 
@@ -197,7 +197,7 @@ class OnboardingNotification implements \SplObserver
     //     "Onboarding required",
     //     "We have a new user. Here's his info: " .json_encode($data));
 
-    echo "OnboardingNotification: The notification has been emailed!\n";
+    echo "OnboardingNotification: The notification has been emailed!<br/>";
   }
 }
 
