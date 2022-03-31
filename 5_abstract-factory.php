@@ -265,5 +265,5 @@ echo $page->render(new PHPTemplateFactory());
 
 // Можете убрать комментарии, если у вас установлен Twig.
 
-// echo "Testing rendering with the Twig factory:\n"; echo $page->render(new
-// TwigTemplateFactory());
+/*echo "Testing rendering with the Twig factory:\n";
+echo $page->render(new TwigTemplateFactory());*/
