@@ -176,7 +176,7 @@ class IMDBMovieScrapingCommand extends WebScrapingCommand
 }
 
 /**
- * Класс Очередь действует как Отправитель. Он складывает объекты команд в стек
+ * Класс Queue (Очередь) действует как Отправитель. Он складывает объекты команд в стек
  * и выполняет их поочерёдно. Если выполнение скрипта внезапно завершится,
  * очередь и все её команды можно будет легко восстановить, и вам не придётся
  * повторять все выполненные команды.
@@ -192,8 +192,7 @@ class Queue
 
   public function __construct()
   {
-    $this->db = new \SQLite3(__DIR__ . '/commands.sqlite',
-      SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+    $this->db = new \SQLite3(__DIR__ . '/commands.sqlite', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
 
     $this->db->query('
       CREATE TABLE IF NOT EXISTS "commands" (
